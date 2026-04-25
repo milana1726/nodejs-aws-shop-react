@@ -4,19 +4,19 @@
 
 #### CloudFront URL:
 
-https://d9uvt7l8o7epj.cloudfront.net/
+https://d22smxj57cb0ls.cloudfront.net/
 
 ---
 
 #### S3 Static Website URL:
 
-http://cdkstack-frontendbucketefe2e19c-xbvyqjn2yoih.s3-website-eu-west-1.amazonaws.com/
+http://mila-first-rs-aws-app.s3-website-eu-west-1.amazonaws.com/
 
 ---
 
-#### S3 Bucket URL
+#### S3 Bucket URL:
 
-https://cdkstack-frontendbucketefe2e19c-xbvyqjn2yoih.s3-eu-west-1.amazonaws.com
+https://mila-first-rs-aws-app.s3-eu-west-1.amazonaws.com/
 
 ---
 
