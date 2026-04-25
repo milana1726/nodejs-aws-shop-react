@@ -11,6 +11,7 @@ export class CdkStack extends cdk.Stack {
 
     // S3 bucket
     const bucket = new s3.Bucket(this, "FrontendBucket", {
+      bucketName: "mila-first-rs-aws-app",
       websiteIndexDocument: "index.html",
       websiteErrorDocument: "index.html",
 
@@ -27,7 +28,6 @@ export class CdkStack extends cdk.Stack {
     });
 
     // CloudFront Distribution
-
     const distribution = new cloudfront.Distribution(
       this,
       "FrontendDistribution",
