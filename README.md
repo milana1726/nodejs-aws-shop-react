@@ -14,6 +14,12 @@ http://cdkstack-frontendbucketefe2e19c-xbvyqjn2yoih.s3-website-eu-west-1.amazona
 
 ---
 
+#### S3 Bucket URL
+
+https://cdkstack-frontendbucketefe2e19c-xbvyqjn2yoih.s3-eu-west-1.amazonaws.com
+
+---
+
 This is frontend starter project for nodejs-aws mentoring program. It uses the following technologies:
 
 - [Vite](https://vitejs.dev/) as a project bundler
