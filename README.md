@@ -1,5 +1,19 @@
 # React-shop-cloudfront
 
+## Application URLs
+
+#### CloudFront URL:
+
+https://d9uvt7l8o7epj.cloudfront.net/
+
+---
+
+#### S3 Static Website URL:
+
+http://cdkstack-frontendbucketefe2e19c-xbvyqjn2yoih.s3-website-eu-west-1.amazonaws.com/
+
+---
+
 This is frontend starter project for nodejs-aws mentoring program. It uses the following technologies:
 
 - [Vite](https://vitejs.dev/) as a project bundler
@@ -36,3 +50,17 @@ Runs tests in console, in browser or with coverage.
 ### `lint`, `prettier`
 
 Runs linting and formatting for all files in `src` folder.
+
+### Deployment Scripts
+
+### `npm run deploy:s3`
+
+Uploads the build to S3 (manual CloudFront invalidation required)
+
+### `npm run deploy:cdk`
+
+Builds and deploys the application using AWS CDK with automatic CloudFront invalidation
+
+### `npm run destroy:cdk`
+
+Removes all AWS infrastructure created via CDK
