@@ -12,32 +12,44 @@ export class CdkStack extends cdk.Stack {
     // S3 bucket
     const bucket = new s3.Bucket(this, "FrontendBucket", {
       bucketName: "mila-first-rs-aws-app",
-      websiteIndexDocument: "index.html",
-      websiteErrorDocument: "index.html",
-
-      publicReadAccess: true,
-      blockPublicAccess: new s3.BlockPublicAccess({
-        blockPublicAcls: false,
-        ignorePublicAcls: false,
-        blockPublicPolicy: false,
-        restrictPublicBuckets: false,
-      }),
-
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      publicReadAccess: false,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
     });
 
-    // CloudFront Distribution
+    //OAI
+    const originAccessIdentity = new cloudfront.OriginAccessIdentity(
+      this,
+      "FrontendOAI",
+    );
+    bucket.grantRead(originAccessIdentity);
+
+    // CloudFront
     const distribution = new cloudfront.Distribution(
       this,
       "FrontendDistribution",
       {
         defaultBehavior: {
-          origin: new origins.S3StaticWebsiteOrigin(bucket),
+          origin: new origins.S3Origin(bucket),
           viewerProtocolPolicy:
             cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         },
         defaultRootObject: "index.html",
+        errorResponses: [
+          {
+            httpStatus: 403,
+            responseHttpStatus: 200,
+            responsePagePath: "/index.html",
+            ttl: cdk.Duration.minutes(0),
+          },
+          {
+            httpStatus: 404,
+            responseHttpStatus: 200,
+            responsePagePath: "/index.html",
+            ttl: cdk.Duration.minutes(0),
+          },
+        ],
       },
     );
 
