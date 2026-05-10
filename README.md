@@ -8,12 +8,6 @@ https://d22smxj57cb0ls.cloudfront.net/
 
 ---
 
-#### S3 Static Website URL:
-
-http://mila-first-rs-aws-app.s3-website-eu-west-1.amazonaws.com/
-
----
-
 #### S3 Bucket URL:
 
 https://mila-first-rs-aws-app.s3-eu-west-1.amazonaws.com/
