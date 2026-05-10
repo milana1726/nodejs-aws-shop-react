@@ -4,6 +4,13 @@ import { AvailableProduct } from "~/models/Product";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import React from "react";
 
+type CreateProductRequest = {
+  title: string;
+  description?: string;
+  price: number;
+  count: number;
+};
+
 export function useAvailableProducts() {
   return useQuery<AvailableProduct[], AxiosError>(
     "available-products",
@@ -63,5 +70,11 @@ export function useDeleteAvailableProduct() {
         Authorization: `Basic ${localStorage.getItem("authorization_token")}`,
       },
     }),
+  );
+}
+
+export function useCreateProduct() {
+  return useMutation((values: CreateProductRequest) =>
+    axios.post<{ id: string }>(`${API_PATHS.product}/products`, values),
   );
 }
