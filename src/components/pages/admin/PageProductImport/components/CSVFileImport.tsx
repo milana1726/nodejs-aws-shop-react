@@ -1,6 +1,8 @@
 import React from "react";
+import axios from "axios";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { useImportFile } from "~/queries/import";
 
 type CSVFileImportProps = {
   url: string;
@@ -22,25 +24,26 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
     setFile(undefined);
   };
 
+  const { getSignedUrl } = useImportFile();
   const uploadFile = async () => {
-    console.log("uploadFile to", url);
+    if (!file) return;
 
-    // Get the presigned URL
-    // const response = await axios({
-    //   method: "GET",
-    //   url,
-    //   params: {
-    //     name: encodeURIComponent(file.name),
-    //   },
-    // });
-    // console.log("File to upload: ", file.name);
-    // console.log("Uploading to: ", response.data);
-    // const result = await fetch(response.data, {
-    //   method: "PUT",
-    //   body: file,
-    // });
-    // console.log("Result: ", result);
-    // setFile("");
+    console.log("uploadFile to", url);
+    try {
+      const signedUrl = await getSignedUrl(file.name);
+
+      console.log("Uploading to:", signedUrl);
+      const result = await fetch(signedUrl, {
+        method: "PUT",
+        body: file,
+      });
+
+      console.log("Upload result:", result.status);
+
+      setFile(undefined);
+    } catch (error) {
+      console.error("Upload failed:", error);
+    }
   };
   return (
     <Box>
