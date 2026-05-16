@@ -9,8 +9,7 @@ import Typography from "@mui/material/Typography";
 import {
   useAvailableProduct,
   useInvalidateAvailableProducts,
-  useRemoveProductCache,
-  useUpsertAvailableProduct,
+  useCreateProduct,
 } from "~/queries/products";
 
 const initialValues: AvailableProduct = AvailableProductSchema.cast({});
@@ -18,32 +17,32 @@ const initialValues: AvailableProduct = AvailableProductSchema.cast({});
 export default function PageProductForm() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
+
   const invalidateAvailableProducts = useInvalidateAvailableProducts();
-  const removeProductCache = useRemoveProductCache();
   const { data, isLoading } = useAvailableProduct(id);
-  const { mutateAsync: upsertAvailableProduct } = useUpsertAvailableProduct();
-  const onSubmit = (values: AvailableProduct) => {
+
+  const { mutateAsync: createProduct } = useCreateProduct();
+
+  const onSubmit = async (values: AvailableProduct) => {
     const formattedValues = AvailableProductSchema.cast(values);
-    const productToSave = id
-      ? {
-          ...formattedValues,
-          id,
-        }
-      : formattedValues;
-    return upsertAvailableProduct(productToSave, {
-      onSuccess: () => {
-        invalidateAvailableProducts();
-        removeProductCache(id);
-        navigate("/admin/products");
-      },
+
+    await createProduct({
+      title: formattedValues.title,
+      description: formattedValues.description,
+      price: Number(formattedValues.price),
+      count: Number(formattedValues.count),
     });
+
+    invalidateAvailableProducts();
+    navigate("/admin/products");
   };
 
   return (
     <PaperLayout>
       <Typography component="h1" variant="h4" align="center" mb={2}>
-        {id ? "Edit product" : "Create new product"}
+        Create new product
       </Typography>
+
       {isLoading ? (
         <>Loading...</>
       ) : (
@@ -65,6 +64,7 @@ export default function PageProductForm() {
                     required
                   />
                 </Grid>
+
                 <Grid item xs={12}>
                   <Field
                     component={TextField}
@@ -76,6 +76,7 @@ export default function PageProductForm() {
                     required
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={4}>
                   <Field
                     component={TextField}
@@ -86,6 +87,7 @@ export default function PageProductForm() {
                     required
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={4}>
                   <Field
                     component={TextField}
@@ -96,6 +98,7 @@ export default function PageProductForm() {
                     required
                   />
                 </Grid>
+
                 <Grid item container xs={12} justifyContent="space-between">
                   <Button
                     color="primary"
@@ -103,6 +106,7 @@ export default function PageProductForm() {
                   >
                     Cancel
                   </Button>
+
                   <Button
                     type="submit"
                     variant="contained"
