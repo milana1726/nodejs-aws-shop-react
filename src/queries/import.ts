@@ -7,9 +7,8 @@ export const useImportFile = () => {
 
     const response = await axios.get<string>(`${API_PATHS.import}/import`, {
       params: { name: fileName },
-      headers: {
-        Authorization: `Basic ${token}`,
-      },
+
+      headers: token ? { Authorization: `Basic ${token}` } : {},
     });
 
     return response.data;
