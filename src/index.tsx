@@ -7,6 +7,24 @@ import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { theme } from "~/theme";
+import axios from "axios";
+
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const status = error.response?.status;
+
+    if (status === 401) {
+      alert("401 Unauthorized: please provide valid credentials!");
+    }
+
+    if (status === 403) {
+      alert("403 Access Denied: invalid credentials!");
+    }
+
+    return Promise.reject(error);
+  },
+);
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,5 +51,5 @@ root.render(
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

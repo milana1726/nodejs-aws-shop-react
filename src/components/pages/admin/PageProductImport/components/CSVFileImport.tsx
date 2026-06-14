@@ -38,7 +38,7 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
         body: file,
       });
 
-      console.log("Upload result:", result.status);
+      console.log("Upload result:", result);
 
       setFile(undefined);
     } catch (error) {
