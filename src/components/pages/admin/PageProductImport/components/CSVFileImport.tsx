@@ -1,8 +1,8 @@
 import React from "react";
-import axios from "axios";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useImportFile } from "~/queries/import";
+import { useInvalidateAvailableProducts } from "~/queries/products";
 
 type CSVFileImportProps = {
   url: string;
@@ -11,6 +11,7 @@ type CSVFileImportProps = {
 
 export default function CSVFileImport({ url, title }: CSVFileImportProps) {
   const [file, setFile] = React.useState<File>();
+  const invalidateProducts = useInvalidateAvailableProducts();
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -41,6 +42,10 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
       console.log("Upload result:", result);
 
       setFile(undefined);
+
+      setTimeout(() => {
+        invalidateProducts();
+      }, 1000);
     } catch (error) {
       console.error("Upload failed:", error);
     }

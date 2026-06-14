@@ -11,7 +11,7 @@ import { Address, AddressSchema, Order } from "~/models/Order";
 import Box from "@mui/material/Box";
 import { useCart, useInvalidateCart } from "~/queries/cart";
 import AddressForm from "~/components/pages/PageCart/components/AddressForm";
-import { useSubmitOrder } from "~/queries/orders";
+import { useInvalidateOrders, useSubmitOrder } from "~/queries/orders";
 
 enum CartStep {
   ReviewCart,
@@ -46,8 +46,9 @@ export default function PageCart() {
   const { data = [] } = useCart();
   const { mutate: submitOrder } = useSubmitOrder();
   const invalidateCart = useInvalidateCart();
+  const invalidateOrders = useInvalidateOrders();
   const [activeStep, setActiveStep] = React.useState<CartStep>(
-    CartStep.ReviewCart
+    CartStep.ReviewCart,
   );
   const [address, setAddress] = useState<Address>(initialAddressValues);
 
@@ -63,13 +64,16 @@ export default function PageCart() {
         productId: i.product.id,
         count: i.count,
       })),
-      address,
+      delivery: {
+        address,
+      },
     };
 
     submitOrder(values as Omit<Order, "id">, {
       onSuccess: () => {
         setActiveStep(activeStep + 1);
         invalidateCart();
+        invalidateOrders();
       },
     });
   };

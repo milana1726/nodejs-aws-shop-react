@@ -34,10 +34,13 @@ export default function Orders() {
           {data?.map((order) => (
             <TableRow key={order.id}>
               <TableCell component="th" scope="row">
-                {order.address?.firstName} {order.address?.lastName}
+                {order.delivery?.address?.firstName}{" "}
+                {order.delivery?.address?.lastName}
               </TableCell>
               <TableCell align="right">{order.items.length}</TableCell>
-              <TableCell align="right">{order.address?.address}</TableCell>
+              <TableCell align="right">
+                {order.delivery?.address?.address}
+              </TableCell>
               <TableCell align="right">
                 {order.statusHistory[order.statusHistory.length - 1].status}
               </TableCell>

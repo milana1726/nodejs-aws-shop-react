@@ -43,7 +43,7 @@ export default function PageOrder() {
       queryKey: "products",
       queryFn: async () => {
         const res = await axios.get<AvailableProduct[]>(
-          `${API_PATHS.bff}/product/available`
+          `${API_PATHS.bff}/product/available`,
         );
         return res.data;
       },
@@ -79,7 +79,7 @@ export default function PageOrder() {
       <Typography component="h1" variant="h4" align="center">
         Manage order
       </Typography>
-      <ReviewOrder address={order.address} items={cartItems} />
+      <ReviewOrder address={order.delivery.address} items={cartItems} />
       <Typography variant="h6">Status:</Typography>
       <Typography variant="h6" color="primary">
         {lastStatusItem?.status.toUpperCase()}
@@ -92,7 +92,7 @@ export default function PageOrder() {
           onSubmit={(values) =>
             updateOrderStatus(
               { id: order.id, ...values },
-              { onSuccess: () => invalidateOrder(order.id) }
+              { onSuccess: () => invalidateOrder(order.id) },
             )
           }
         >

@@ -28,7 +28,9 @@ export type statusHistory = Yup.InferType<typeof statusHistorySchema>;
 export const OrderSchema = Yup.object({
   id: Yup.string().required(),
   items: Yup.array().of(OrderItemSchema).defined(),
-  address: AddressSchema.required(),
+  delivery: Yup.object({
+    address: AddressSchema.required(),
+  }).defined(),
   statusHistory: Yup.array().of(statusHistorySchema).defined(),
 }).defined();
 

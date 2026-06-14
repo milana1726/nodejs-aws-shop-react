@@ -43,7 +43,7 @@ export const products: Product[] = [
 ];
 
 export const availableProducts: AvailableProduct[] = products.map(
-  (product, index) => ({ ...product, count: index + 1 })
+  (product, index) => ({ ...product, count: index + 1 }),
 );
 
 export const cart: CartItem[] = [
@@ -70,11 +70,13 @@ export const cart: CartItem[] = [
 export const orders: Order[] = [
   {
     id: "1",
-    address: {
-      address: "some address",
-      firstName: "Name",
-      lastName: "Surname",
-      comment: "",
+    delivery: {
+      address: {
+        address: "some address",
+        firstName: "Name",
+        lastName: "Surname",
+        comment: "",
+      },
     },
     items: [
       { productId: "7567ec4b-b10c-48c5-9345-fc73c48a80aa", count: 2 },
@@ -86,11 +88,13 @@ export const orders: Order[] = [
   },
   {
     id: "2",
-    address: {
-      address: "another address",
-      firstName: "John",
-      lastName: "Doe",
-      comment: "Ship fast!",
+    delivery: {
+      address: {
+        address: "another address",
+        firstName: "John",
+        lastName: "Doe",
+        comment: "Ship fast!",
+      },
     },
     items: [{ productId: "7567ec4b-b10c-48c5-9345-fc73c48a80aa", count: 3 }],
     statusHistory: [
